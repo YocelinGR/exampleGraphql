@@ -43,13 +43,15 @@ const getCourse = (args) => {
 }
 
 const getCoursesByTopic = ({ topic }) => {
-  courses.map(course => {
+  let coursesByTopic = [];
+  courses.forEach(course => {
     course.topics.forEach(topicElement => {
       if (topicElement.title === topic) {
-        return course;
+        coursesByTopic.push(course);
       }
     })
   })
+  return coursesByTopic;
 }
 
 const updateCourseTopic = ({ id, topicId, topic }) => {
@@ -94,4 +96,19 @@ app.use('/graphql', express_graphql({
   graphiql: true
 }))
 
-app.listen(5000, () => console.log('Server Listening'));
+app.listen(3000, () => console.log('Server Listening'));
+/*
+query getCoursesByTopic($topic: String!) {
+    coursesByTopic(topic: $topic) {
+        title
+        topics{
+          id,
+          title
+        }
+    }
+}
+// query var
+{
+  "topic": "Rust"
+}
+*/
