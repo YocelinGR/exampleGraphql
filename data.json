@@ -1,0 +1,47 @@
+{
+  "courses": [
+    {
+      "id": 1,
+      "title": "Nodejs Course",
+      "author": "John Carter",
+      "description": "lorem ipsum",
+      "topics": [
+        {
+          "id": 1,
+          "title": "Javascript"
+        }
+      ],
+      "url": "http://faztweb.com"
+    },
+    {
+      "id": 2,
+      "title": "Rust Programming language",
+      "author": "Mark Carter",
+      "description": "lorem ipsum",
+      "topics": [
+        {
+          "id": 1,
+          "title": "Rust"
+        },
+        {
+          "id": 2,
+          "title": "Baba"
+        }
+      ],
+      "url": "http://faztweb.com"
+    },
+    {
+      "id": 3,
+      "title": "Redux Course",
+      "author": "Ben Carter",
+      "description": "lorem ipsum",
+      "topics": [
+        {
+          "id": 1,
+          "title": "Javascript"
+        }
+      ],
+      "url": "http://faztweb.com"
+    }
+  ]
+}
