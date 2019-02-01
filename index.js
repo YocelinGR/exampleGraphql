@@ -13,8 +13,8 @@ type Query {
 }
 
 type Mutation{
-  updateCourseTopic(id: Int!, topic: String!): Course
-  addCourseTopic(id: Int!, topic: String!): Course
+  updateTopic(id: Int!, topicId: Int!, topicNew: String!): Course
+  addTopic(courseId: Int!, newTopicTitle: String!): Course
 }
 
 type Course {
@@ -54,12 +54,12 @@ const getCoursesByTopic = ({ topic }) => {
   return coursesByTopic;
 }
 
-const updateCourseTopic = ({ id, topicId, topic }) => {
-  courses.map(course => {
+const updateCourseTopic = ({ id, topicId, topicNew }) => {
+  courses.forEach(course => {
     if (course.id === id) {
-      course.topics.map(topicElement => {
-        if (topicId === topicElement.id) {
-          topicElement.title = topic;
+      course.topics.forEach(topicElement => {
+        if (topicElement.id === topicId) {
+          topicElement.title = topicNew;
           return course;
         }
       })
@@ -69,25 +69,24 @@ const updateCourseTopic = ({ id, topicId, topic }) => {
 }
 
 
-const addCourseTopic = ({ id, topicTitle, topicId }) => {
-  const newTopic = {
-    topicId,
-    topicTitle
-  }
+const addCourseTopic = ({ courseId, newTopicTitle }) => {
   courses.map(course => {
-    if (course.id === id) {
-      course.topic.push(newTopic);
-      return course;
+    if (course.id === courseId) {
+      course.topics.push({
+        id: course.topics.length + 1,
+        title: newTopicTitle
+      });
+      console.log(course.topics);
     }
   })
-  return courses.filter(course => course.id === id)[0];
+  return courses.filter(course => course.id === courseId)[0];
 }
 
 const root = {
   course: getCourse,
   coursesByTopic: getCoursesByTopic,
-  updateCourseTopic: updateCourseTopic,
-  addCourseTopic: addCourseTopic
+  updateTopic: updateCourseTopic,
+  addTopic: addCourseTopic
 }
 
 app.use('/graphql', express_graphql({
@@ -97,18 +96,3 @@ app.use('/graphql', express_graphql({
 }))
 
 app.listen(3000, () => console.log('Server Listening'));
-/*
-query getCoursesByTopic($topic: String!) {
-    coursesByTopic(topic: $topic) {
-        title
-        topics{
-          id,
-          title
-        }
-    }
-}
-// query var
-{
-  "topic": "Rust"
-}
-*/
